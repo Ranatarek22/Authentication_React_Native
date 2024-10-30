@@ -24,6 +24,7 @@ export type RootStackParamList = {
   Login: undefined;
   Profile: undefined;
   Users: undefined;
+  Main: undefined;
 };
 
 type LoginScreenNavigationProp = NativeStackNavigationProp<
@@ -143,6 +144,7 @@ export default LoginScreen;
 const styles = StyleSheet.create({
   container: {
     gap: 10,
+   
   },
   header: {
     fontSize: 28,

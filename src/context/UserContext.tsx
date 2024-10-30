@@ -1,4 +1,3 @@
-
 import React, {
   createContext,
   useContext,
@@ -28,6 +27,7 @@ export interface Person {
 interface UserContextType {
   users: Person[];
   error: string | null;
+  fetchUsers: ()=>Promise<void>;
 }
 
 
@@ -42,7 +42,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({children}) => {
   const [users, setUsers] = useState<Person[]>([]);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
+
     const fetchUsers = async () => {
       try {
         const res = await axiosInstance.get('/users');
@@ -58,11 +58,11 @@ export const UserProvider: React.FC<UserProviderProps> = ({children}) => {
         }
       }
     };
-    fetchUsers();
-  }, []);
+    
+
 
   return (
-    <UserContext.Provider value={{users, error}}>
+    <UserContext.Provider value={{users, error, fetchUsers}}>
       {children}
     </UserContext.Provider>
   );

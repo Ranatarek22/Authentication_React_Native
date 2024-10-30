@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TouchableOpacity } from "react-native";
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 
 interface ButtonComponentProps {
   title: string;
@@ -12,16 +12,25 @@ const ButtonComponent: React.FC<ButtonComponentProps> = ({title, onPress}) => {
     </TouchableOpacity>
   );
 };
- export default ButtonComponent;
- 
+export default ButtonComponent;
+
 const styles = StyleSheet.create({
   buttonContainer: {
     backgroundColor: '#ff9500',
-    padding: 10,
+    padding: 15,
     borderRadius: 5,
-    width: '45%',
+    width: '55%', // Adjusted width to fit two buttons side by side
     alignItems: 'center',
+    // borderBottomWidth: 4,
+    // borderBottomColor: 'white',
     marginHorizontal: 5,
+    // Shadow properties for iOS
+    shadowColor: '#fff',
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 0.7,
+    shadowRadius: 6,
+    // Shadow property for Android
+    elevation: 4,
   },
   buttonText: {
     color: '#ffffff',

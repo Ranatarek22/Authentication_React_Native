@@ -1,16 +1,19 @@
 // src/screens/Users.tsx
-import React from 'react';
+import React, {useEffect} from 'react';
 import {FlatList, StyleSheet, SafeAreaView, Text} from 'react-native';
 import PersonCard from './PersonCard';
 import {useUserContext} from '../context/UserContext';
 
 const Users = () => {
-  const {users, error} = useUserContext();
+  const {users, error, fetchUsers} = useUserContext();
+  useEffect(() => {
+    fetchUsers();
+  }, []);
 
   return (
     <SafeAreaView style={styles.container}>
       {error && <Text style={styles.error}>{error}</Text>}
-      {users.length === 0 && !error && <Text>No users available.</Text>}
+      {users.length === 0 && !error && <Text>loading..</Text>}
       <FlatList
         data={users}
         renderItem={({item}) => {
