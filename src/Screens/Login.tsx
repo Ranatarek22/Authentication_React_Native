@@ -15,39 +15,27 @@ import {useNavigation} from '@react-navigation/native';
 
 import {NativeStackNavigationProp} from 'react-native-screens/lib/typescript/native-stack/types';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {LoginResponse} from '../models/LoginResponse';
+import {LoginData} from '../models/AuthModels';
+import {useMutation} from 'react-query';
+import AuthApi from '../api/AuthApi';
+import {useLogin} from '../hooks/useLogin';
 
 const logo = require('../images/login.png');
 const facebook = require('../images/facebook.png');
 const pint = require('../images/pinterest.png');
 const link = require('../images/Group.png');
-export type RootStackParamList = {
-  Login: undefined;
-  Profile: undefined;
-  Users: undefined;
-  Main: undefined;
-};
-
-type LoginScreenNavigationProp = NativeStackNavigationProp<
-  RootStackParamList,
-  'Login'
->;
 
 const validationSchema = Yup.object().shape({
-  email: Yup.string()
-    .email('Invalid email format')
-    .required('Please enter your email'),
+  mobileNumber: Yup.string().required('Please enter your mobile number'),
   password: Yup.string().required('Please enter your password'),
 });
 
 const LoginScreen = () => {
-  const navigation = useNavigation<LoginScreenNavigationProp>();
-  const handleLogin = async (values: any) => {
-    try {
-      await AsyncStorage.setItem('userEmail', values.email);
-      navigation.navigate('Main');
-    } catch (error) {
-      console.error('Error saving email:', error);
-    }
+  const {mutate: login, isLoading} = useLogin();
+
+  const handleLogin = (values: LoginData) => {
+    login(values);
   };
 
   return (
@@ -57,7 +45,7 @@ const LoginScreen = () => {
         <Image source={logo} />
       </View>
       <Formik
-        initialValues={{email: '', password: ''}}
+        initialValues={{mobileNumber: '', password: ''}}
         validationSchema={validationSchema}
         onSubmit={handleLogin}>
         {({
@@ -70,22 +58,24 @@ const LoginScreen = () => {
         }) => (
           <View style={styles.formContainer}>
             <View>
-              <Text style={styles.textInput}>Enter Email/Phone number</Text>
+              <Text style={styles.textInput}>Enter Mobile Number</Text>
               <TextInput
                 style={[
                   styles.input,
-                  touched.email && errors.email ? styles.errorInput : null,
+                  touched.mobileNumber && errors.mobileNumber
+                    ? styles.errorInput
+                    : null,
                 ]}
-                placeholder="Email"
-                onChangeText={handleChange('email')}
-                onBlur={handleBlur('email')}
-                value={values.email}
-                keyboardType="email-address"
+                placeholder="Mobile Number"
+                onChangeText={handleChange('mobileNumber')}
+                onBlur={handleBlur('mobileNumber')}
+                value={values.mobileNumber}
+                keyboardType="phone-pad"
                 autoCapitalize="none"
                 autoCorrect={false}
               />
-              {touched.email && errors.email ? (
-                <Text style={styles.errorText}>{errors.email}</Text>
+              {touched.mobileNumber && errors.mobileNumber ? (
+                <Text style={styles.errorText}>{errors.mobileNumber}</Text>
               ) : null}
             </View>
             <View>
@@ -144,7 +134,6 @@ export default LoginScreen;
 const styles = StyleSheet.create({
   container: {
     gap: 10,
-   
   },
   header: {
     fontSize: 28,

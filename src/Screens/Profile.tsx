@@ -29,13 +29,13 @@ const ProfileScreen = () => {
     fetchImage,
     handleProfileGallery,
     handleTakePhoto,
-    fetchEmail,
+    fetchName,
     email,
   } = useImageContext();
   const navigation = useNavigation<LoginScreenNavigationProp>();
   useEffect(() => {
     fetchImage();
-    fetchEmail();
+    fetchName();
   }, []);
 
   const handleLogout = () => {

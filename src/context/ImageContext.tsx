@@ -2,13 +2,13 @@ import React, {createContext, useState, useContext, ReactNode} from 'react';
 import {Alert, PermissionsAndroid, Platform} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ImagePicker from 'react-native-image-crop-picker';
-
+import {openSettings} from 'react-native-permissions';
 interface ImageContextType {
   image: string;
   handleProfileGallery: () => Promise<void>;
   handleTakePhoto: () => Promise<void>;
   fetchImage: () => Promise<void>;
-  fetchEmail: () => Promise<void>;
+  fetchName: () => Promise<void>;
   email: string;
 }
 
@@ -78,6 +78,16 @@ export const ImageProvider: React.FC<{children: ReactNode}> = ({children}) => {
       Alert.alert(
         'Permission Denied',
         'You need to give camera permission to use this feature.',
+        [
+          {text: 'Cancel', style: 'cancel'},
+          {
+            text: 'Open Settings',
+            onPress: async () => {
+              console.log('Opening settings...'); 
+              await openSettings();
+            },
+          },
+        ],
       );
     }
   };
@@ -92,9 +102,9 @@ export const ImageProvider: React.FC<{children: ReactNode}> = ({children}) => {
       console.error('Error retrieving image:', error);
     }
   };
-  const fetchEmail = async () => {
+  const fetchName = async () => {
     try {
-      const storedEmail = await AsyncStorage.getItem('userEmail');
+      const storedEmail = await AsyncStorage.getItem('name');
       if (storedEmail) {
         setEmail(storedEmail);
       }
@@ -109,7 +119,7 @@ export const ImageProvider: React.FC<{children: ReactNode}> = ({children}) => {
         handleProfileGallery,
         handleTakePhoto,
         fetchImage,
-        fetchEmail,
+        fetchName,
         email,
       }}>
       {children}

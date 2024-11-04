@@ -9,6 +9,8 @@ import LoginScreen from './Screens/Login';
 import UsersScreen from './Screens/Users';
 import SplashScreen from 'react-native-splash-screen';
 import { ImageProvider } from './context/ImageContext';
+import { QueryClient ,QueryClientProvider } from 'react-query';
+import Toast from 'react-native-toast-message';
 
 
 const profile = require('./images/profile1.png');
@@ -29,14 +31,7 @@ const AuthStack = () => {
     </Stack.Navigator>
   );
 };
-const HomeStack = () => {
-  return (
-    <Stack.Navigator initialRouteName="Profile">
-      <Stack.Screen name="Profile" component={ProfileScreen} />
-      <Stack.Screen name="Users" component={UsersScreen} />
-    </Stack.Navigator>
-  );
-};
+
 
 const MainTabNavigator = () => {
   return (
@@ -61,40 +56,36 @@ const MainTabNavigator = () => {
             tabBarIcon: () => <Image source={people} />,
           }}
         />
-        {/* <Tab.Screen
-        name="Settings"
-        component={HomeStack}
-        options={{
-          headerShown: false,
-          tabBarIcon: () => <Image source={settings} />,
-        }}
-      /> */}
+    
       </Tab.Navigator>
     </ImageProvider>
   );
 };
-
+const queryClient=new QueryClient()
 const App: React.FC = () => {
  useEffect(()=>{
   SplashScreen.hide()
  },[])
   return (
-    <UserProvider>
-      <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen
-            name="Auth"
-            component={AuthStack}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Main"
-            component={MainTabNavigator}
-            options={{headerShown: false}}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </UserProvider>
+    <QueryClientProvider client={queryClient}>
+      <UserProvider>
+        <NavigationContainer>
+          <Stack.Navigator>
+            <Stack.Screen
+              name="Auth"
+              component={AuthStack}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="Main"
+              component={MainTabNavigator}
+              options={{headerShown: false}}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+        <Toast ref={(ref: any) => Toast.setRef(ref)} />
+      </UserProvider>
+    </QueryClientProvider>
   );
 };
 
