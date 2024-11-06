@@ -20,6 +20,7 @@ import {LoginData} from '../models/AuthModels';
 import {useMutation} from 'react-query';
 import AuthApi from '../api/AuthApi';
 import {useLogin} from '../hooks/useLogin';
+import {useTranslation} from 'react-i18next';
 
 const logo = require('../images/login.png');
 const facebook = require('../images/facebook.png');
@@ -33,7 +34,7 @@ const validationSchema = Yup.object().shape({
 
 const LoginScreen = () => {
   const {mutate: login, isLoading} = useLogin();
-
+  const {t} = useTranslation();
   const handleLogin = (values: LoginData) => {
     login(values);
   };
@@ -41,7 +42,7 @@ const LoginScreen = () => {
   return (
     <View style={styles.container}>
       <View style={styles.loginContainer}>
-        <Text style={styles.header}>Login</Text>
+        <Text style={styles.header}>{t('login')}</Text>
         <Image source={logo} />
       </View>
       <Formik
@@ -58,7 +59,7 @@ const LoginScreen = () => {
         }) => (
           <View style={styles.formContainer}>
             <View>
-              <Text style={styles.textInput}>Enter Mobile Number</Text>
+              <Text style={styles.textInput}>{t('enterMobileNumber')}</Text>
               <TextInput
                 style={[
                   styles.input,
@@ -66,7 +67,7 @@ const LoginScreen = () => {
                     ? styles.errorInput
                     : null,
                 ]}
-                placeholder="Mobile Number"
+                placeholder={t('MobileNumber')}
                 onChangeText={handleChange('mobileNumber')}
                 onBlur={handleBlur('mobileNumber')}
                 value={values.mobileNumber}
@@ -79,7 +80,7 @@ const LoginScreen = () => {
               ) : null}
             </View>
             <View>
-              <Text style={styles.textInput}>Enter Password</Text>
+              <Text style={styles.textInput}>{t('enterPassword')}</Text>
               <TextInput
                 style={[
                   styles.input,
@@ -87,7 +88,7 @@ const LoginScreen = () => {
                     ? styles.errorInput
                     : null,
                 ]}
-                placeholder="Password"
+                placeholder={t('password')}
                 onChangeText={handleChange('password')}
                 onBlur={handleBlur('password')}
                 value={values.password}
@@ -102,13 +103,13 @@ const LoginScreen = () => {
                 <LinearGradient
                   colors={['#6e79af', '#7482c1', '#7d90dd']}
                   style={styles.button}>
-                  <Text style={styles.buttonText}>LOGIN</Text>
+                  <Text style={styles.buttonText}>{t('login')}</Text>
                 </LinearGradient>
               </Pressable>
             </View>
             <View style={styles.loginWith}>
               <View style={styles.line} />
-              <Text>Or login with </Text>
+              <Text>{t('loginWith')}</Text>
 
               <View style={styles.line} />
             </View>
@@ -119,8 +120,8 @@ const LoginScreen = () => {
             </View>
 
             <View style={styles.signup}>
-              <Text style={{color: '#b6bcd4'}}>New User?</Text>
-              <Text style={{color: '#fc9a83'}}>Create an account</Text>
+              <Text style={{color: '#b6bcd4'}}>{t('newUser')}</Text>
+              <Text style={{color: '#fc9a83'}}>{t('createAccount')}</Text>
             </View>
           </View>
         )}

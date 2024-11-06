@@ -6,6 +6,7 @@ import {useNavigation} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import Toast from 'react-native-toast-message';
+import { useTranslation } from 'react-i18next';
 export type RootStackParamList = {
   Login: undefined;
   Profile: undefined;
@@ -18,6 +19,7 @@ type LoginScreenNavigationProp = NativeStackNavigationProp<
   'Login'
 >;
 export const useLogin = () => {
+  const {t}=useTranslation();
   const navigation = useNavigation<LoginScreenNavigationProp>();
 
   return useMutation(
@@ -29,9 +31,9 @@ export const useLogin = () => {
       onSuccess: async (data: LoginResponse) => {
         Toast.show({
           type: 'success',
-          text1: 'Login Successful',
-          text2: 'Welcome back!',
-          visibilityTime: 7000,
+          text1:t("loginSuccessful"),
+          text2: t("welcomeBack"),
+          visibilityTime: 3000,
           position: 'top',
         });
         const {

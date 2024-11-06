@@ -1,4 +1,5 @@
 import React from 'react';
+import {useTranslation} from 'react-i18next';
 import {Text, View, Image, StyleSheet} from 'react-native';
 
 export type Person = {
@@ -30,22 +31,31 @@ const PersonCard: React.FC<Person> = ({
   const fullAddress = `${address || 'Unknown address'}, ${
     state || 'Unknown state'
   }, ${zip || 'Unknown zip'}, ${country || 'Unknown country'}`;
-
+  const {t} = useTranslation();
   return (
     <View style={styles.container}>
       <Image source={{uri: photo}} style={styles.image} />
       <View style={styles.userInfo}>
         <Text style={styles.name}>{name}</Text>
-        <Text>Username: {String(username)}</Text>
-        <Text>Company: {String(company)}</Text>
-        <Text>Email: {String(email)}</Text>
-        <Text>Phone: {String(phone)}</Text>
-        <Text>Address: {fullAddress}</Text>
+        <Text>
+          {t('username')} : {String(username)}
+        </Text>
+        <Text>
+          {t('company')} : {String(company)}
+        </Text>
+        <Text>
+          {t('email')} : {String(email)}
+        </Text>
+        <Text>
+          {t('phone')} : {String(phone)}
+        </Text>
+        <Text>
+          {t('address')} :{fullAddress}
+        </Text>
       </View>
     </View>
   );
 };
-
 
 const styles = StyleSheet.create({
   container: {

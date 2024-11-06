@@ -22,7 +22,6 @@ const Users = () => {
     <SafeAreaView style={styles.container}>
       {isLoading ? (
         <View>
-          {' '}
           <ActivityIndicator />
         </View>
       ) : (

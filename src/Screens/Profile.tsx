@@ -13,6 +13,7 @@ import ButtonComponent from '../components/ButtonComponent';
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {useImageContext} from '../context/ImageContext';
+import {useTranslation} from 'react-i18next';
 type RootStackParamList = {
   Login: undefined;
   Profile: undefined;
@@ -24,6 +25,7 @@ type LoginScreenNavigationProp = NativeStackNavigationProp<
   'Login'
 >;
 const ProfileScreen = () => {
+  const {t} = useTranslation();
   const {
     image,
     fetchImage,
@@ -47,35 +49,36 @@ const ProfileScreen = () => {
       <View style={styles.profileContainer}>
         <View style={styles.containerHero}>
           <Image source={{uri: image}} style={styles.profileImage} />
-          <Text style={styles.username}>Developer</Text>
+          <Text style={styles.username}>{t('developer')}</Text>
           <Text style={styles.username}>{email}</Text>
         </View>
 
         <View style={styles.statsContainer}>
           <View style={styles.statItem}>
-            <Text style={styles.statNumber}>80</Text>
-            <Text style={styles.statLabel}>Posts</Text>
+            <Text style={styles.statNumber}>{t('eighty')}</Text>
+            <Text style={styles.statLabel}>{t('posts')}</Text>
           </View>
           <View style={styles.statItem}>
-            <Text style={styles.statNumber}>80</Text>
-            <Text style={styles.statLabel}>Followers</Text>
+            <Text style={styles.statNumber}>{t('eighty')}</Text>
+            <Text style={styles.statLabel}>{t('followers')}</Text>
           </View>
           <View style={styles.statItem}>
-            <Text style={styles.statNumber}>80</Text>
-            <Text style={styles.statLabel}>Following</Text>
+            <Text style={styles.statNumber}>{t('eighty')}</Text>
+            <Text style={styles.statLabel}>{t('following')}</Text>
           </View>
         </View>
 
         <View style={styles.buttonRow}>
-          <ButtonComponent
-            title="Change Photo"
-            onPress={handleProfileGallery}
-          />
-          <ButtonComponent title="Take Photo" onPress={handleTakePhoto} />
+          <View style={styles.widthBtn}>
+            <ButtonComponent title={t('follow')} onPress={() => {}} />
+          </View>
+          <View style={styles.widthBtn}>
+            <ButtonComponent title={t('msg')} onPress={() => {}} />
+          </View>
         </View>
       </View>
 
-      <Text style={styles.postsHeader}>Posts</Text>
+      <Text style={styles.postsHeader}>{t('posts')}</Text>
       <View style={styles.postsContainer}>
         <Image
           source={require('../images/user2.png')}
@@ -114,8 +117,7 @@ const ProfileScreen = () => {
           style={styles.postImage}
         />
       </View>
-
-      <ButtonComponent title="Log Out" onPress={handleLogout} />
+ 
     </ScrollView>
   );
 };
@@ -123,6 +125,12 @@ const styles = StyleSheet.create({
   scrollContentContainer: {
     flexGrow: 1,
     justifyContent: 'center',
+    alignItems: 'center',
+  },
+  widthBtn: {
+    width: '65%',
+    paddingHorizontal: 15,
+
     alignItems: 'center',
   },
   profileContainer: {

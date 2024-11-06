@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#ff9500',
     padding: 15,
     borderRadius: 5,
-    width: '55%', // Adjusted width to fit two buttons side by side
+    width: '100%', // Adjusted width to fit two buttons side by side
     alignItems: 'center',
     // borderBottomWidth: 4,
     // borderBottomColor: 'white',
@@ -31,6 +31,7 @@ const styles = StyleSheet.create({
     shadowRadius: 6,
     // Shadow property for Android
     elevation: 4,
+    marginTop: 20,
   },
   buttonText: {
     color: '#ffffff',
